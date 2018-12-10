@@ -503,11 +503,11 @@ class OneLogin_Saml2_Auth
      *
      * @throws OneLogin_Saml2_Error
      */
-    public function logout($returnTo = null, $parameters = array(), $nameId = null, $sessionIndex = null, $stay = false, $nameIdFormat = null, $nameIdNameQualifier = null)
+    public function logout($application_index = null, $returnTo = null, $parameters = array(), $nameId = null, $sessionIndex = null, $stay = false, $nameIdFormat = null, $nameIdNameQualifier = null)
     {
         assert('is_array($parameters)');
 
-        $sloUrl = $this->getSLOurl();
+        $sloUrl = $this->getSLOurl($application_index);
         if (empty($sloUrl)) {
             throw new OneLogin_Saml2_Error(
                 'The IdP does not support Single Log Out',
@@ -562,12 +562,12 @@ class OneLogin_Saml2_Auth
      *
      * @return string The url of the Single Logout Service
      */
-    public function getSLOurl()
+    public function getSLOurl($application_index = null)
     {
         $url = null;
         $idpData = $this->_settings->getIdPData();
-        if (isset($idpData['singleLogoutService']) && isset($idpData['singleLogoutService']['url'])) {
-            $url = $idpData['singleLogoutService']['url'];
+        if (isset($idpData['singleLogoutService']) && isset($idpData['singleLogoutService'][$application_index]) && isset($idpData['singleLogoutService'][$application_index]['url'])) {
+            $url = $idpData['singleLogoutService'][$application_index]['url'];
         }
         return $url;
     }
