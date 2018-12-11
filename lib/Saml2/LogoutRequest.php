@@ -40,7 +40,7 @@ class OneLogin_Saml2_LogoutRequest
      * @param string|null             $nameIdFormat The NameID Format will be set in the LogoutRequest.
      * @param string|null             $nameIdNameQualifier The NameID NameQualifier will be set in the LogoutRequest.
      */
-    public function __construct(OneLogin_Saml2_Settings $settings, $request = null, $nameId = null, $sessionIndex = null, $nameIdFormat = null, $nameIdNameQualifier = null)
+    public function __construct($application_index = null, OneLogin_Saml2_Settings $settings, $request = null, $nameId = null, $sessionIndex = null, $nameIdFormat = null, $nameIdNameQualifier = null)
     {
         $this->_settings = $settings;
 
@@ -101,7 +101,7 @@ class OneLogin_Saml2_LogoutRequest
     ID="{$id}"
     Version="2.0"
     IssueInstant="{$issueInstant}"
-    Destination="{$idpData['singleLogoutService']['url']}">
+    Destination="{$idpData['singleLogoutService'][$application_index]['url']}">
     <saml:Issuer>{$spEntityId}</saml:Issuer>
     {$nameIdObj}
     {$sessionIndexStr}
